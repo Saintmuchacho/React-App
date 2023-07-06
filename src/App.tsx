@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { CanceledError } from "axios";
 import { useEffect, useState } from "react";
 // hapa na define interface iliniweze kuaccess
 // vizuri user object ya kwa fake backend ya
@@ -19,13 +19,20 @@ const App = ({}) => {
   useEffect(() => {
     // natumia axios kwa ajiri ya kusend request
     // kwenye server
+    const controller = new AbortController();
     axios
-      .get<Users[]>("https://jsonplaceholder.typicode.com/musers")
+      .get<Users[]>("https://jsonplaceholder.typicode.com/users", {
+        signal: controller.signal,
+      })
       .then((res) => setUsers(res.data)) //a promise
       .catch((err) => {
-        setError(err.message);
+        {
+          if (err instanceof CanceledError) return;
+          setError(err.message);
+        }
       }); //this function will be called when something goes wrong
     //while fetching the data
+    return () => controller.abort();
   }, []);
   return (
     <>
