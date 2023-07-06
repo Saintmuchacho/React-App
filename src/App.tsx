@@ -30,7 +30,7 @@ const App = ({}) => {
   return (
     <>
       {/* displaying error */}
-      <p className="text-danger">{error}</p>
+      {error && <p className="text-danger">{error}</p>}
       <div>
         <ul>
           {users.map((user) => (
