@@ -1,22 +1,16 @@
-import { useState } from "react";
-import ProductList from "./components/ProductList";
+import { useEffect} from "react";
 
 const App = () => {
-  const [category, setCategory] = useState("");
-  // effectHook dependencies
-  return (
-    <div>
-      <select
-        className="form-select"
-        onChange={(event) => setCategory(event.target.value)}
-      >
-        <option value=""></option>
-        <option value="clothing">clothing</option>
-        <option value="kitchen">kitchen</option>
-      </select>
-      <ProductList category={category} />
-    </div>
-  );
+  const connect = () => console.log("connecting");
+  const disconnect = () => console.log("disconnecting");
+  // effectHook clean up function
+  useEffect(() => {
+    // setup code
+    connect();
+    // clean up code
+    return () => disconnect();
+  });
+  return <div></div>;
 };
 
 export default App;
