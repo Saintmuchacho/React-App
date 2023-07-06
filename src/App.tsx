@@ -1,20 +1,22 @@
-import { useEffect, useRef } from "react";
+import { useState } from "react";
+import ProductList from "./components/ProductList";
 
 const App = () => {
-  // hapa unaanza kudefine useRef yako iliuweze kuweka focus kwenye
-  // input field yako
-  const ref = useRef<HTMLInputElement>(null);
-  // hapa unaweka effectHook yako
-  useEffect(() => {
-    // sideEffect
-    if (ref.current) ref.current.focus();
-  });
+  const [category, setCategory] = useState("");
+  // effectHook dependencies
   return (
     <div>
-      {/* nini maana ya effectHook */} 
-      <input ref={ref} type="text" className="form-control" />
+      <select
+        className="form-select"
+        onChange={(event) => setCategory(event.target.value)}
+      >
+        <option value=""></option>
+        <option value="clothing">clothing</option>
+        <option value="kitchen">kitchen</option>
+      </select>
+      <ProductList category={category} />
     </div>
   );
 };
-// kazi ya effectHook ni kukeep componet pure
+
 export default App;
